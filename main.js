@@ -4,12 +4,13 @@ const hat = "^";
 const hole = "O";
 const fieldCharacter = "░";
 const pathCharacter = "*";
+currentlyPlaying = true;
 
 class Field {
   constructor(field) {
     this._field = field;
-    this.x = 0;
     this.y = 0;
+    this.x = 0;
   }
 
   print() {
@@ -29,6 +30,15 @@ class Field {
     // if()
   }
 
+  static generateField(width, height) {
+    for (i = 0; i < width; i++) {
+      this._field.push(hole);
+    }
+    for (i = 0; i < height; i++) {
+      this._field.push(hole);
+    }
+  }
+
   nextMove() {
     do {
       let move = prompt(
@@ -38,6 +48,7 @@ class Field {
         case "u":
           this.y--;
           console.log("Moving Up");
+          console.log(this.y);
           break;
         case "r":
           this.x++;
@@ -52,24 +63,34 @@ class Field {
         case "l":
           this.x--;
           console.log("Moving Left");
+          console.log(this.x);
           break;
         default:
           return "Please try right movement";
       }
+      this._field[this.y][this.x] = pathCharacter;
+      // console.log(this._field);
     } while (!this.endOfGame());
   }
 }
 
-const myField = new Field([
-  ["*", "░", "O", "░"],
-  ["░", "O", "░", "░"],
-  ["░", "^", "░", "O"],
-  ["O", "░", "░", "░"],
-]);
+function game() {
+  while (currentlyPlaying) {
+    console.log(myField.print());
+    // console.log(myField._field);
+    // console.log(myField.charPossition());
+    myField.nextMove();
+  }
+  return "game over";
+}
 
-console.log(myField.charPossition());
-console.log(myField.print());
-console.log(myField.nextMove());
+// const myField = new Field([
+//   ["*", "░", "O", "░"],
+//   ["░", "O", "░", "░"],
+//   ["░", "^", "░", "O"],
+//   ["O", "░", "░", "░"],
+// ]);
 
-// const age = prompt("How old are you? ");
-// console.log(`You are ${age} years old.`);
+const myField = new Field(Field.generateField(6, 6));
+
+game();
