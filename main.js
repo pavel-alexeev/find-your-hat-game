@@ -30,14 +30,7 @@ class Field {
     // if()
   }
 
-  static generateField(width, height) {
-    for (i = 0; i < width; i++) {
-      this._field.push(hole);
-    }
-    for (i = 0; i < height; i++) {
-      this._field.push(hole);
-    }
-  }
+  static generateField(width, height) {}
 
   nextMove() {
     do {
@@ -84,13 +77,13 @@ function game() {
   return "game over";
 }
 
-// const myField = new Field([
-//   ["*", "░", "O", "░"],
-//   ["░", "O", "░", "░"],
-//   ["░", "^", "░", "O"],
-//   ["O", "░", "░", "░"],
-// ]);
+const myField = new Field([
+  ["*", "░", "O", "░"],
+  ["░", "O", "░", "░"],
+  ["░", "^", "░", "O"],
+  ["O", "░", "░", "░"],
+]);
 
-const myField = new Field(Field.generateField(6, 6));
+// const myField = new Field(Field.generateField(6, 6));
 
 game();
