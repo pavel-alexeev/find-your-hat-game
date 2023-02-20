@@ -27,7 +27,8 @@ class Field {
   hatPossition() {}
 
   endOfGame() {
-    // if()
+    if (pathCharacter[this.y][this.x] === hat[this.y][this.x]) {
+    }
   }
 
   static generateField(width, height) {}
@@ -59,10 +60,10 @@ class Field {
           console.log(this.x);
           break;
         default:
-          return "Please try right movement";
+          console.log("Wrong letter!");
       }
       this._field[this.y][this.x] = pathCharacter;
-      // console.log(this._field);
+      console.log(myField.print());
     } while (!this.endOfGame());
   }
 }
