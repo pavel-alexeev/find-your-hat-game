@@ -12,8 +12,6 @@ let indexW = 0;
 class Field {
   constructor(field) {
     this._field = field;
-    // this.y = 0;
-    // this.x = 0;
   }
 
   print() {
@@ -134,7 +132,7 @@ class Field {
         indexW--;
       }
     }
-    this._field[indexH][indexW] = pathCharacter;
+    // this._field[indexH][indexW] = pathCharacter;
   }
 
   indexOfItem(array2d, item) {
