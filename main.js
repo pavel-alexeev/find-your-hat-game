@@ -57,7 +57,7 @@ class Field {
 
   // nextMove() {
   //   do {
-  //     let move = prompt(
+  //     let console.log(
   //       "Your next move? 'u' for up, 'l' for left, 'd' for down, 'r' for right"
   //     );
   //     switch (move) {
@@ -102,15 +102,17 @@ class Field {
     if (move === "u") {
       if (indexH <= 0) {
         // console.log(indexH);
-        move = prompt("Not allowed. Out of boundary.");
+        console.log("You lost! Out of boundary.");
+        currentlyPlaying = false;
         // this.startOfGame();
       } else {
         indexH--;
       }
     }
     if (move === "r") {
-      if (indexW >= 3) {
-        move = prompt("Not allowed. Out of boundary.");
+      if (indexW >= this._field[0].length - 1) {
+        console.log("You lost! Out of boundary.");
+        currentlyPlaying = false;
         // console.log(indexW);
       } else {
         indexW++;
@@ -118,7 +120,8 @@ class Field {
     }
     if (move === "d") {
       if (indexH >= this._field[indexH].length - 1) {
-        move = prompt("Not allowed. Out of boundary.");
+        console.log("You lost! Out of boundary.");
+        currentlyPlaying = false;
         // console.log(indexW);
       } else {
         indexH++;
@@ -127,12 +130,12 @@ class Field {
     if (move === "l") {
       if (indexW <= 0) {
         // console.log(indexW);
-        move = prompt("Not allowed. Out of boundary.");
+        console.log("You lost! Out of boundary.");
+        currentlyPlaying = false;
       } else {
         indexW--;
       }
     }
-    // this._field[indexH][indexW] = pathCharacter;
   }
 
   indexOfItem(array2d, item) {
@@ -204,7 +207,6 @@ class Field {
         this.nextMove();
         this.ifWin();
       }
-
       // console.log([indexH, indexW]);
       // console.log(this.indexOfItem(this._field, hat));
     }
@@ -225,10 +227,11 @@ class Field {
 }
 
 const myField = new Field([
-  ["*", "░", "O", "░"],
-  ["░", "O", "░", "░"],
-  ["░", "^", "░", "O"],
-  ["O", "░", "░", "░"],
+  ["*", "░", "O", "░", "O"],
+  ["░", "O", "░", "░", "░"],
+  ["░", "░", "░", "O", "░"],
+  ["O", "░", "░", "░", "^"],
+  ["░", "O", "░", "░", "░"],
 ]);
 
 // const myField = new Field(Field.generateField(6, 6));
