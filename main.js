@@ -5,6 +5,7 @@ const hole = "O";
 const fieldCharacter = "░";
 const pathCharacter = "*";
 let currentlyPlaying = true;
+let ground = [];
 
 let indexH = 0;
 let indexW = 0;
@@ -18,38 +19,63 @@ class Field {
     return this._field.map((row) => row.join("")).join("\n");
   }
 
-  charPossition() {
-    this._field[indexH][indexW] = pathCharacter;
-  }
-
-  hatPossition() {
-    let cubes = [
-      ["string", "string"],
-      ["string", "string"],
-    ];
-
-    for (let i = 0; i < cubes.length; i++) {
-      for (let j = 0; j < cubes[i].length; j++) {
-        console.log(cubes[i][j]);
-      }
+  startOfGame() {
+    let ask = prompt("Do you want to start new game?");
+    if (ask === "y") {
+      this.game();
+    } else if (ask === "n") {
+      prompt("See you next time");
+    } else {
+      prompt("Pleast type right input");
     }
   }
 
-  static generateField() {
-    let ground = []; // Initialize array
-    let width = parseInt(prompt("Type width: "));
-    let height = parseInt(prompt("Type height: "));
-    while (!/^[0-9]+$/.test(width, height)) {
-      width = prompt("Type width: ");
-      height = prompt("Type height: ");
+  static generateField(width, height, percentage) {
+    // Initialize array
+    while (!/^[0-9]+$/.test(width)) {
+      width = prompt("Type width(number): ");
+    }
+    while (!/^[0-9]+$/.test(height)) {
+      height = prompt("Type height(number): ");
+    }
+    while (!/^[0-9]+$/.test(percentage)) {
+      percentage = prompt("How many percent of field will be holes: ");
     }
     for (let i = 0; i < height; i++) {
       ground[i] = []; // Initialize inner array
       for (let j = 0; j < width; j++) {
         // i++ needs to be j++
-        ground[i][j] = Math.floor(Math.random() * 5);
+        const holeOrField = (percentage) => {
+          if (percentage >= 0 && percentage <= 100) {
+            const ranNum = Math.random() * 100;
+            if (ranNum < percentage) {
+              return hole;
+            } else {
+              return fieldCharacter;
+            }
+          }
+        };
+        // pathCharacter starting position
+        ground[0][0] = pathCharacter;
+
+        ground[i][j] = holeOrField(percentage);
       }
     }
+    // Sets the hat position
+    // ground[Math.floor(Math.random() * (width - 1))][
+    //   Math.floor(Math.random() * (height - 1))
+    // ] = hat;
+    do {
+      ground[Math.floor(Math.random() * (width - 1))][
+        Math.floor(Math.random() * (height - 1))
+      ] = hat;
+    } while (ground[0][0] == hat);
+    // if (!(ground[0][0] = pathCharacter)) {
+    //   ground[Math.floor(Math.random() * width)][
+    //     Math.floor(Math.random() * height)
+    //   ] = hat;
+    // }
+
     return ground;
   }
 
@@ -142,9 +168,7 @@ class Field {
 
   game() {
     while (currentlyPlaying) {
-      // console.log(this.print(Field.generateField()));
       console.log(this.print());
-      // console.log(Field.generateField());
       if (currentlyPlaying) {
         this.nextMove();
         this.ifWin();
@@ -152,19 +176,8 @@ class Field {
     }
     console.log("Game Over");
   }
-
-  startOfGame() {
-    let ask = prompt("Do you want to start new game?");
-    if (ask === "y") {
-      this.game();
-    } else if (ask === "n") {
-      prompt("See you next time");
-    } else {
-      prompt("Pleast type right input");
-    }
-  }
 }
 
 const myField = new Field(Field.generateField());
 
-myField.startOfGame();
+myField.game();
