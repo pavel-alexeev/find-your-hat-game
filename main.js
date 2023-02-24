@@ -20,91 +20,47 @@ class Field {
 
   charPossition() {
     this._field[indexH][indexW] = pathCharacter;
-    // do {
-    //   this.nextMove();
-    // } while (pathCharacter !== hat);
   }
 
   hatPossition() {
-    var cubes = [
+    let cubes = [
       ["string", "string"],
       ["string", "string"],
     ];
 
-    for (var i = 0; i < cubes.length; i++) {
-      for (var j = 0; j < cubes[i].length; j++) {
+    for (let i = 0; i < cubes.length; i++) {
+      for (let j = 0; j < cubes[i].length; j++) {
         console.log(cubes[i][j]);
       }
     }
   }
 
-  endOfGame() {
-    // if(pathCharacter[this.y][this.x])
-  }
-
   static generateField() {
-    // let arr = []; // Initialize array
-    // for (var i = 0; i < arr.length; i++) {
-    //   arr[i] = []; // Initialize inner array
-    //   for (var j = 0; j < arr[i].length; j++) {
-    //     // i++ needs to be j++
-    //     arr[i][j] = "bye";
-    //   }
-    //   console.log(arr);
-    // }
-    // return field;
+    let ground = []; // Initialize array
+    let width = parseInt(prompt("Type width: "));
+    let height = parseInt(prompt("Type height: "));
+    while (!/^[0-9]+$/.test(width, height)) {
+      width = prompt("Type width: ");
+      height = prompt("Type height: ");
+    }
+    for (let i = 0; i < height; i++) {
+      ground[i] = []; // Initialize inner array
+      for (let j = 0; j < width; j++) {
+        // i++ needs to be j++
+        ground[i][j] = Math.floor(Math.random() * 5);
+      }
+    }
+    return ground;
   }
-
-  // nextMove() {
-  //   do {
-  //     let console.log(
-  //       "Your next move? 'u' for up, 'l' for left, 'd' for down, 'r' for right"
-  //     );
-  //     switch (move) {
-  //       case "u":
-  //         indexH--;
-  //         console.log("Moving Up");
-  //         console.log(indexH);
-  //         break;
-  //       case "r":
-  //         indexW++;
-  //         console.log("Moving Right");
-  //         console.log(indexW);
-  //         break;
-  //       case "d":
-  //         indexH++;
-  //         console.log("Moving Down");
-  //         console.log(indexH);
-  //         break;
-  //       case "l":
-  //         indexW--;
-  //         console.log("Moving Left");
-  //         console.log(indexW);
-  //         break;
-  //       default:
-  //         console.log("Wrong letter!");
-  //         break;
-  //     }
-  //     this.checkIfWin();
-  //     this._field[indexH][indexW] = pathCharacter;
-
-  //     console.log(this._field[0].length);
-  //     console.log(myField.print());
-  //   } while (currentlyPlaying);
-  // }
 
   nextMove() {
     let move = prompt(
       "Your next move? 'u' for up, 'l' for left, 'd' for down, 'r' for right"
     );
-    // console.log(indexH);
-    // console.log(indexW);
     if (move === "u") {
       if (indexH <= 0) {
-        // console.log(indexH);
         console.log("You lost! Out of boundary.");
         currentlyPlaying = false;
-        // this.startOfGame();
       } else {
         indexH--;
       }
@@ -113,7 +69,6 @@ class Field {
       if (indexW >= this._field[0].length - 1) {
         console.log("You lost! Out of boundary.");
         currentlyPlaying = false;
-        // console.log(indexW);
       } else {
         indexW++;
       }
@@ -122,14 +77,12 @@ class Field {
       if (indexH >= this._field[indexH].length - 1) {
         console.log("You lost! Out of boundary.");
         currentlyPlaying = false;
-        // console.log(indexW);
       } else {
         indexH++;
       }
     }
     if (move === "l") {
       if (indexW <= 0) {
-        // console.log(indexW);
         console.log("You lost! Out of boundary.");
         currentlyPlaying = false;
       } else {
@@ -160,17 +113,8 @@ class Field {
   }
 
   checkIfWin(arr) {
-    // if (indexW < 0) {
-    //   console.log("You lost! Out of boundary");
-    //   return currentlyPlaying === false;
-    // } else if (indexW >= this._field[0].length) {
-    //   console.log("You lost! Out of boundary");
-    //   return currentlyPlaying === false;
-    // }
     for (let i = 0; i < arr.length; i++) {
-      for (let j = 0; j < arr[i].length; j++) {
-        // console.log(arr[i][j]);
-      }
+      for (let j = 0; j < arr[i].length; j++) {}
     }
     if (this.indexOfItem(this._field, hat) === false) {
       console.log("Congratulations! You found the hat.");
@@ -181,7 +125,7 @@ class Field {
   ifWin() {
     switch (this._field[indexH][indexW]) {
       case hole:
-        console.log("You lost!!!");
+        console.log("You lost! Fell into a hole.");
         currentlyPlaying = false;
         break;
       case hat:
@@ -198,23 +142,18 @@ class Field {
 
   game() {
     while (currentlyPlaying) {
+      // console.log(this.print(Field.generateField()));
       console.log(this.print());
-      // Field.generateField(this._field);
-      // this.indexOfItem(this._field, hat);
-      // this.checkIfWin(this._field);
-      // console.log([indexH], [indexW]);
+      // console.log(Field.generateField());
       if (currentlyPlaying) {
         this.nextMove();
         this.ifWin();
       }
-      // console.log([indexH, indexW]);
-      // console.log(this.indexOfItem(this._field, hat));
     }
     console.log("Game Over");
   }
 
   startOfGame() {
-    // console.log(this._field[indexH][indexW]);
     let ask = prompt("Do you want to start new game?");
     if (ask === "y") {
       this.game();
@@ -226,17 +165,6 @@ class Field {
   }
 }
 
-const myField = new Field([
-  ["*", "░", "O", "░", "O"],
-  ["░", "O", "░", "░", "░"],
-  ["░", "░", "░", "O", "░"],
-  ["O", "░", "░", "░", "^"],
-  ["░", "O", "░", "░", "░"],
-]);
-
-// const myField = new Field(Field.generateField(6, 6));
-// game();
-// console.log(this._field.generateField());
-// console.log(myField.generateField());
+const myField = new Field(Field.generateField());
 
 myField.startOfGame();
