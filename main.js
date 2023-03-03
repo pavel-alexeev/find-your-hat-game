@@ -15,11 +15,6 @@ class Field {
     this._field = field;
   }
 
-  static resetGame() {
-    ground = [];
-    console.clear();
-  }
-
   // Prints 2d array
   print() {
     return this._field.map((row) => row.join("")).join("\n");
