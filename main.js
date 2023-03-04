@@ -35,7 +35,7 @@ class Field {
   static generateField(width, height, percentage) {
     // Initialize array
     prompt(
-      "Welcome to the 'Find You Hat' game. Press 'Enter' to start the game."
+      "Welcome to the 'Find Your Hat' game. Press 'Enter' to start the game."
     );
 
     while (!/^[0-9]+$/.test(width)) {
@@ -154,6 +154,8 @@ class Field {
 
   // Function to start the game
   game() {
+    indexH = 0;
+    indexW = 0;
     while (currentlyPlaying) {
       console.log(this.print());
       if (currentlyPlaying) {
@@ -161,7 +163,15 @@ class Field {
         this.ifWin();
       }
     }
-    console.log("Game Over");
+    let playAgain = prompt("Would you like to play again? Press 'y' for yes or any other key to quit.");
+    if(playAgain === "y") {
+      currentlyPlaying = true;
+      indexH = 0
+      indexW = 0
+      ground = Field.generateField(ground[0].length, ground.length, 20);
+      this.game();
+    } else 
+    console.log("Thanks for playing!");
   }
 }
 
